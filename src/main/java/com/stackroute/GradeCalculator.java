@@ -9,14 +9,14 @@ import java.util.TreeMap;
 public class GradeCalculator {
 
 	public static Map<Integer, String> calculateGrade(Map<Integer, Integer> scores) {
-		if(scores.isEmpty() || null==scores) {
+		if(null==scores || scores.isEmpty()) {
 			return null;
 		}
 		
 		Map<Integer, String> grades = new HashMap<>();
 		Set<Integer> keys = scores.keySet();
 		for(Map.Entry<Integer, Integer> mentry : scores.entrySet()) {
-			if(mentry.getValue()>=80) {
+			if(mentry.getValue()>=80 && mentry.getValue() <= 100) {
 				grades.put(mentry.getKey(), "A");
 			}
 			else if(mentry.getValue()>=60 && mentry.getValue()<80) {
@@ -25,7 +25,7 @@ public class GradeCalculator {
 			else if(mentry.getValue()>=45 && mentry.getValue()<60) {
 				grades.put(mentry.getKey(), "C");
 			}
-			else {
+			else if(mentry.getValue() < 45){
 				grades.put(mentry.getKey(), "D");
 			}
 		}
@@ -39,27 +39,39 @@ public class GradeCalculator {
       int noOfStudents;
       Map<Integer,Integer> scores = new HashMap<>();
       Map<Integer,String> grades = new HashMap<>();
-      int marks;
       
       Scanner s = new Scanner(System.in);
-      Scanner s1 = new Scanner(System.in);
-      noOfStudents = s.nextInt();
+   
+      while(s.hasNextLine()) {
+    	  String lne = s.nextLine();
+    	  noOfStudents = Integer.parseInt(lne);
       
+      //s1.nextLine();
       String[] mapDetails = new String[noOfStudents];
-      
+      //System.out.println("Studests " + noOfStudents);
+
       for(int i=0;i<noOfStudents;i++) {
-    	  
-    	  mapDetails[i] = s1.nextLine();
-    	  String[] mapDetails1 = mapDetails[i].split(" ");
+    	  lne = s.nextLine();
+    	  //System.out.println("Details " + lne);
+    	  String[] mapDetails1 = lne.split(" ");
+    	  //System.out.println("" + mapDetails1[0] + mapDetails1[1]);
+    	  //if(mapDetails[0] != "" && mapDetails[1] != null) {
     	  scores.put(Integer.parseInt(mapDetails1[0]), Integer.parseInt(mapDetails1[1]));
-      }
+    	  //}
+    	 }
       
-     // System.out.println("mapData is " + scores);
-      
+     
+      //System.out.println("Scores " + scores);
       grades = calculateGrade(scores);
+      //System.out.println("Grades " + grades);
+      if(null!= grades) {
+    	  StringBuilder sb = new StringBuilder();
       for(Map.Entry<Integer, String> entry : grades.entrySet()) {
-    	  System.out.println(entry.getKey()+" "+ entry.getValue()); 
+    	  
+    	  sb.append(entry.getKey()+" "+ entry.getValue() + " "); 
       }
-      
+      System.out.println(sb.toString().trim());
+      }
+      }
 	}
 }
